@@ -4,17 +4,19 @@ A Set of useful functions for working with files, date, errors and strings.
 
 ## Date
 
-### JalaliToTime
+### ParseJalali
 
-Convert jalali (Persian) date to standard time. this function accept jalali date as `YYYY-MM-DD HH:MM:SS` format.
+Parse jalali date from string. if you pass nil location it use **Asia/Tehran** by default.
+
+this function return nil when failed to parse jalali date.
 
 ```go
 // Signature:
-JalaliToTime(jDate string) (time.Time, error)
+ParseJalali(str string, loc *time.Location) *ptime.Time
 
 // Example:
 import "github.com/bopher/utils"
-date, err := utils.JalaliToTime("1400-01-31 12:30")
+jDate := utils.ParseJalali("1370-09-30 14:30", nil)
 ```
 
 ### TimeToJalali
