@@ -1,7 +1,6 @@
 package utils
 
 import (
-	"errors"
 	"regexp"
 	"strconv"
 	"strings"
@@ -10,40 +9,32 @@ import (
 	ptime "github.com/yaa110/go-persian-calendar"
 )
 
-// JalaliToTime convert jalali date string to time from 2006-01-02 format
-func JalaliToTime(jDate string) (time.Time, error) {
-	t := time.Time{}
-	rx := regexp.MustCompile(`^\d{4}(-|\/)(\d{1,2})(-|\/)(\d{1,2})$`)
-	if !rx.MatchString(jDate) {
-		return t, errors.New("Inalid date format")
+// JalaliToTime convert jalali date string to time from 2006-01-02 15:04:05 format
+//
+// this function returns nil on invalid date
+func JalaliToTime(jd string) *time.Time {
+	isNumber := func(v string) bool { return regexp.MustCompile(`^[0-9]+$`).MatchString(v) }
+	p := func(str string) []int {
+		pattern := regexp.MustCompile(`[^\d]+`)
+		parts := strings.Split(pattern.ReplaceAllString(str, "-"), "-")
+		res := make([]int, 6)
+		for i := 0; i < 6; i++ {
+			item := "0"
+			if len(parts) > i && isNumber(parts[i]) {
+				item = parts[i]
+			}
+			t, _ := strconv.Atoi(item)
+			res[i] = t
+		}
+		return res
+	}(jd)
+
+	date := ptime.Date(p[0], ptime.Month(p[1]), p[2], p[3], p[4], p[5], 0, time.FixedZone("Asia/Tehran", 12600))
+	if date.Year() == p[0] && int(date.Month()) == p[1] && date.Day() == p[2] {
+		res := date.Time()
+		return &res
 	}
-
-	jDate = strings.ReplaceAll(jDate, "/", "-")
-	jDate = strings.ReplaceAll(jDate, "\\", "-")
-	jDate = strings.ReplaceAll(jDate, ".", "-")
-	parts := strings.Split(jDate, "-")
-
-	year, err := strconv.Atoi(parts[0])
-	if err != nil {
-		return t, errors.New("invalid year")
-	}
-
-	month, err := strconv.Atoi(parts[1])
-	if err != nil || (month > 12 || month < 1) {
-		return t, errors.New("invalid month")
-	}
-
-	day, err := strconv.Atoi(parts[2])
-	if err != nil || (month > 31 || month < 1) {
-		return t, errors.New("invalid day")
-	}
-
-	pt := ptime.Date(year, ptime.Month(month), day, 0, 0, 0, 0, ptime.Iran())
-	if pt.Year() != year || int(pt.Month()) != month || pt.Day() != day {
-		return t, errors.New("Inalid date")
-	}
-
-	return pt.Time(), nil
+	return nil
 }
 
 // TimeToJalali convert time to jalali date

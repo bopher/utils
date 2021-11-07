@@ -6,7 +6,7 @@ A Set of useful functions for working with files, date, errors and strings.
 
 ### JalaliToTime
 
-Convert jalali (Persian) date to standard time. this function accept jalali date as `YYYY-MM-DD` format.
+Convert jalali (Persian) date to standard time. this function accept jalali date as `YYYY-MM-DD HH:MM:SS` format.
 
 ```go
 // Signature:
@@ -14,7 +14,7 @@ JalaliToTime(jDate string) (time.Time, error)
 
 // Example:
 import "github.com/bopher/utils"
-date, err := utils.JalaliToTime("1400-01-31")
+date, err := utils.JalaliToTime("1400-01-31 12:30")
 ```
 
 ### TimeToJalali
