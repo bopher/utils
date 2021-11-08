@@ -2,4 +2,4 @@ module github.com/bopher/utils
 
 go 1.16
 
-require github.com/yaa110/go-persian-calendar v1.0.2
+require go.mongodb.org/mongo-driver v1.7.4

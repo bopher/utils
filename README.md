@@ -2,36 +2,6 @@
 
 A Set of useful functions for working with files, date, errors and strings.
 
-## Date
-
-### ParseJalali
-
-Parse jalali date from string. if you pass nil location it use **Asia/Tehran** by default.
-
-this function return nil when failed to parse jalali date.
-
-```go
-// Signature:
-ParseJalali(str string, loc *time.Location) *ptime.Time
-
-// Example:
-import "github.com/bopher/utils"
-jDate := utils.ParseJalali("1370-09-30 14:30", nil)
-```
-
-### TimeToJalali
-
-Convert standard go time to jalali time.
-
-```go
-// Signature:
-TimeToJalali(t time.Time) (ptime.Time, error)
-
-// Example:
-import "github.com/bopher/utils"
-jDate, err := utils.TimeToJalali(myTime)
-```
-
 ## Error
 
 ### HasError
@@ -169,8 +139,8 @@ Generate random string from character list.
 
 ```go
 import "github.com/bopher/utils"
-str, err := RandomStringFromCharset(5, "1234567890") // => "59102"
-str2, err2 := RandomStringFromCharset(3, "ABCDEFGH") // => "DFC"
+str, err := utils.RandomStringFromCharset(5, "1234567890") // => "59102"
+str2, err2 := utils.RandomStringFromCharset(3, "ABCDEFGH") // => "DFC"
 ```
 
 ### RandomString
@@ -179,5 +149,236 @@ Generate random string from Alpha-Num Chars
 
 ```go
 import "github.com/bopher/utils"
-str, err := RandomString(5) // => "AB5S2"
+str, err := utils.RandomString(5) // => "AB5S2"
+```
+
+### Slugify
+
+Generate dash separated string.
+
+```go
+import "github.com/bopher/utils"
+str := utils.Slugify("welcome to", "my site") // => "welcome-to-my-site"
+```
+
+### ConcatStr
+
+Concat multiple string together.
+
+```go
+import "github.com/bopher/utils"
+str := utils.ConcatStr("hel", "lo") // => "hello"
+```
+
+## Mongo DB
+
+### MongoMap
+
+Generate `primitive.M` structure from args. Args count must be even!
+
+```go
+import "github.com/bopher/utils"
+m := utils.MongoMap("_id", 1, "name", "John") // => { _id: 1, name: "John"}
+```
+
+### MongoMaps
+
+generate `[]primitive.M` from args. Args count must be even!
+
+```go
+import "github.com/bopher/utils"
+m := utils.MongoMaps("_id", 1, "name", "John") // => [{ _id: 1}, {name: "John"}]
+```
+
+### MongoDoc
+
+Generate `primitive.D` from args. Args count must be even!
+
+```go
+import "github.com/bopher/utils"
+m := utils.MongoDoc("_id", 1, "name", "John") // => [{Key: "_id", Value: 1}, {Key: "name", Value: "John"}]
+```
+
+### MongoOr
+
+Generate mongo $or.
+
+```go
+import "github.com/bopher/utils"
+orCond := utils.MongoOr(utils.MongoMaps("_id", 1, "name", "John")) // => {$or: [{ _id: 1}, {name: "John"}]}
+```
+
+
+### MongoAnd
+
+Generate mongo $and.
+
+```go
+import "github.com/bopher/utils"
+andCond := utils.MongoAnd(utils.MongoMaps("_id", 1, "name", "John")) // => {$and: [{ _id: 1}, {name: "John"}]}
+```
+
+### MongoIn
+
+Generate mongo $in.
+
+```go
+import "github.com/bopher/utils"
+inCond := utils.MongoIn("name", []int{1,2,3}) // => {name: {$in: [1,2,3]}}
+```
+
+
+### MongoSet
+
+Generate mongo $set.
+
+```go
+import "github.com/bopher/utils"
+setVal := utils.MongoSet(utils.MongoMap("name", "John")) // => {$set: {name: "John"}}
+```
+
+### MongoNestedSet
+
+Generate nested mongo $set with key/value.
+
+```go
+import "github.com/bopher/utils"
+setVal := utils.MongoNestedSet("name", "John") // => {$set: {name: "John"}}
+```
+
+### MongoMatch
+
+Generate mongo $match.
+
+```go
+import "github.com/bopher/utils"
+match := utils.MongoMatch(utils.MongoMap("name", "John")) // => {$match: {name: "John"}}
+```
+
+### MongoLimit
+
+Generate mongo $limit.
+
+```go
+import "github.com/bopher/utils"
+limit := utils.MongoLimit(2) // => {$limit: 2}
+```
+
+### MongoSort
+
+Generate mongo $sort.
+
+```go
+import "github.com/bopher/utils"
+sorts := utils.MongoSort(utils.MongoMap({"_id", 1})) // => {$sort: {_id:1}}
+```
+
+### MongoSkip
+
+Generate mongo $skip.
+
+```go
+import "github.com/bopher/utils"
+sorts := utils.MongoSkip(30)) // => {$skip: 30}
+```
+
+### MongoLookup
+
+Generate mongo $lookup.
+
+```go
+import "github.com/bopher/utils"
+lookup := utils.MongoLookup("users", "user_id", "_id", "user"))
+// => {
+//     $lookup: {
+//         from: "users",
+//         localField: "user_id",
+//         foreignField: "_id",
+//         as: "user"
+//     }
+// }
+```
+
+### MongoUnwind
+
+Generate mongo $unwind (with preserveNull).
+
+```go
+import "github.com/bopher/utils"
+unwind := utils.MongoUnwind("invoices"))
+// => {
+//     $unwind: {
+//         path: "invoices",
+//         preserveNullAndEmptyArrays: true,
+//     }
+// }
+```
+
+### MongoUnwrap
+
+Get first item of array and insert to doc using $addFields.
+
+```go
+import "github.com/bopher/utils"
+unwrapped := utils.MongoUnwrap("logins", "first_login")) // => {$addFields: {first_login: {$first: logins}}}
+```
+
+### MongoGroup
+
+Generate mongo $group.
+
+```go
+import "github.com/bopher/utils"
+group := utils.MongoGroup(utils.MongoMap("_id", "$_id", "last_login", utils.MongoMap("$last", "$logins"))))
+// => {
+//     $group:{
+//         _id: $_id,
+//         last_login: {$last: $logins}
+//     }
+// }
+```
+
+### MongoSetRoot
+
+Generate mongo $replaceRoot.
+
+```go
+import "github.com/bopher/utils"
+setRoot := utils.MongoSetRoot("$_record")) // => {$replaceRoot: {newRoot: $_record}}
+```
+
+### MongoMergeRoot
+
+Generate $replaceRoot with $mergeObject.
+
+```go
+import "github.com/bopher/utils"
+mergeRoot := utils.MongoMergeRoot("$_record", "$$ROOT")) // => {$replaceRoot: {newRoot: {$mergeObjects: ["$_record", "$$ROOT"]}}}
+```
+
+### MongoUnProject
+
+Generate $project to remove fields from result.
+
+```go
+import "github.com/bopher/utils"
+unProject := utils.MongoUnProject("_record", "referral")) // => {$project: {_record:0, referral: 0 }}
+```
+
+### ParseObjectID
+
+Parse object id from string. This function return nil if object id is invalid!
+
+```go
+import "github.com/bopher/utils"
+oId := utils.ParseObjectID("6184011af9530d2ec143ae38")
+```
+
+### IsValidOId
+
+Check if object id is valid and not zero.
+
+```go
+import "github.com/bopher/utils"
+valid := utils.IsValidOId(oIdObject)
 ```

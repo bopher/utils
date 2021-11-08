@@ -31,3 +31,14 @@ func RandomStringFromCharset(n uint, letters string) (res string, err error) {
 func RandomString(n uint) (string, error) {
 	return RandomStringFromCharset(n, "ABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890")
 }
+
+// Slugify make slugify string
+func Slugify(str ...string) string {
+	r := regexp.MustCompile("\\s+")
+	return string(r.ReplaceAllString(strings.Join(str, "-"), "-"))
+}
+
+// ConcatStr join strings
+func ConcatStr(str ...string) string {
+	return strings.Join(str, "")
+}
