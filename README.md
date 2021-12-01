@@ -4,6 +4,31 @@ A Set of useful functions for working with files, date, errors and strings.
 
 ## Error
 
+### TaggedError
+
+Generate a tagged error.
+
+```go
+// Signature:
+TaggedError(tags []string, format string, args ...interface{}) error
+
+// Example:
+TaggedError([]string{"MyLib","MyMethod"}, "failed on %s file!", "main.json")
+// [MyLib] [MyMethod] failed on main.json file!
+```
+
+### IsErrorOf
+
+Check if error has tag.
+
+```go
+// Signature:
+IsErrorOf(tag string, err error) bool
+
+// Example:
+IsErrorOf("MyLib", err) // true
+```
+
 ### HasError
 
 Check if error is nil or not.
@@ -172,6 +197,15 @@ str := utils.ConcatStr("hel", "lo") // => "hello"
 
 ## Mongo DB
 
+### MongoArray
+
+Generate `primitive.A` array from args.
+
+```go
+import "github.com/bopher/utils"
+m := utils.MongoArray("John", "Kim", "Jimmy") // => ["John", "Kim", "Jimmy"]
+```
+
 ### MongoMap
 
 Generate `primitive.M` structure from args. Args count must be even!
@@ -208,7 +242,6 @@ import "github.com/bopher/utils"
 orCond := utils.MongoOr(utils.MongoMaps("_id", 1, "name", "John")) // => {$or: [{ _id: 1}, {name: "John"}]}
 ```
 
-
 ### MongoAnd
 
 Generate mongo $and.
@@ -226,7 +259,6 @@ Generate mongo $in.
 import "github.com/bopher/utils"
 inCond := utils.MongoIn("name", []int{1,2,3}) // => {name: {$in: [1,2,3]}}
 ```
-
 
 ### MongoSet
 

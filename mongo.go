@@ -4,6 +4,11 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+// MongoArray generate primitive.A
+func MongoArray(args ...interface{}) primitive.A {
+	return args
+}
+
 // MongoMap generate primitive.M
 //
 // Args count must even
