@@ -4,6 +4,9 @@ import (
 	"math/rand"
 	"regexp"
 	"strings"
+
+	"golang.org/x/text/language"
+	"golang.org/x/text/message"
 )
 
 // ExtractNumbers extract numbers from string
@@ -38,7 +41,19 @@ func Slugify(str ...string) string {
 	return string(r.ReplaceAllString(strings.Join(str, "-"), "-"))
 }
 
-// ConcatStr join strings
-func ConcatStr(str ...string) string {
-	return strings.Join(str, "")
+// ConcatStr join strings with separator
+func ConcatStr(sep string, str ...string) string {
+	res := make([]string, 0)
+	for _, v := range str {
+		if strings.TrimSpace(v) != "" {
+			res = append(res, v)
+		}
+	}
+	return strings.Join(res, sep)
+}
+
+// FormatNumber format number with comma separator
+func FormatNumber(format string, value int64) string {
+	p := message.NewPrinter(language.English)
+	return p.Sprintf(format, value)
 }

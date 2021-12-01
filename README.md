@@ -188,11 +188,24 @@ str := utils.Slugify("welcome to", "my site") // => "welcome-to-my-site"
 
 ### ConcatStr
 
-Concat multiple string together.
+Join strings with separator.
+
+```go
+// Signature:
+ConcatStr(sep string, str ...string) string
+
+// Example:
+import "github.com/bopher/utils"
+str := utils.ConcatStr(" ", "John", "", "Doe") // => "John Doe"
+```
+
+### FormatNumber
+
+Format number with comma separator.
 
 ```go
 import "github.com/bopher/utils"
-str := utils.ConcatStr("hel", "lo") // => "hello"
+str := utils.FormatNumber("total: $ %d", 12500000) // => "total: $ 12,500,000"
 ```
 
 ## Mongo DB
