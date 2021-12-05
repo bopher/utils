@@ -38,7 +38,8 @@ func RandomString(n uint) (string, error) {
 // Slugify make slugify string
 func Slugify(str ...string) string {
 	r := regexp.MustCompile("\\s+")
-	return string(r.ReplaceAllString(strings.Join(str, "-"), "-"))
+	r2 := regexp.MustCompile("\\-+")
+	return string(r2.ReplaceAllString(string(r.ReplaceAllString(strings.Join(str, "-"), "-")), "-"))
 }
 
 // ConcatStr join strings with separator
@@ -53,7 +54,7 @@ func ConcatStr(sep string, str ...string) string {
 }
 
 // FormatNumber format number with comma separator
-func FormatNumber(format string, value int64) string {
+func FormatNumber(format string, v ...interface{}) string {
 	p := message.NewPrinter(language.English)
-	return p.Sprintf(format, value)
+	return p.Sprintf(format, v...)
 }
