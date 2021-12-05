@@ -1,6 +1,6 @@
 # Utils
 
-A Set of useful functions for working with files, date, errors and strings.
+A Set of useful functions for working with files, errors and strings.
 
 ## Error
 
