@@ -171,8 +171,9 @@ Extension(file string) string
 
 // Example
 Extension("file") // ""
-Extension("file.JPG") // "jpg"
-Extension("file.png") // "png"
+Extension("file.JPG") // ".jpg"
+Extension("file.png") // ".png"
+Extension("file.") // "."
 ```
 
 ## String
