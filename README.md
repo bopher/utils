@@ -147,6 +147,34 @@ import "github.com/bopher/utils"
 err := utils.CreateDirectory("a/b/c/d") // => Create all a, b, c and d directory
 ```
 
+### DetectMime
+
+Detect file mime info. This function returns `nil` on error.
+
+```go
+// Signature:
+DetectMime(file string) *mimetype.MIME
+
+// Example:
+if mime := DetectMime(myFile); mime != nil {
+    // do something
+}
+```
+
+### Extension
+
+Get file extension.
+
+```go
+// Signature:
+Extension(file string) string
+
+// Example
+Extension("file") // ""
+Extension("file.JPG") // "jpg"
+Extension("file.png") // "png"
+```
+
 ## String
 
 ### ExtractNumbers

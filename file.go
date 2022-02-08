@@ -5,6 +5,9 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"strings"
+
+	"github.com/gabriel-vasile/mimetype"
 )
 
 // FileExists check if file exists
@@ -83,4 +86,19 @@ func GetSubDirectory(dir string) ([]string, error) {
 // CreateDirectory create nested directory
 func CreateDirectory(path string) error {
 	return os.MkdirAll(path, os.ModePerm)
+}
+
+// DetectMime detect file mime info
+//
+// returns null on fail
+func DetectMime(file string) *mimetype.MIME {
+	if data, err := os.ReadFile(file); err == nil {
+		return mimetype.Detect(data)
+	}
+	return nil
+}
+
+// Extension get file extension
+func Extension(file string) string {
+	return strings.ToLower(filepath.Ext(file))
 }
