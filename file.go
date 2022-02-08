@@ -88,14 +88,9 @@ func CreateDirectory(path string) error {
 	return os.MkdirAll(path, os.ModePerm)
 }
 
-// DetectMime detect file mime info
-//
-// returns null on fail
-func DetectMime(file string) *mimetype.MIME {
-	if data, err := os.ReadFile(file); err == nil {
-		return mimetype.Detect(data)
-	}
-	return nil
+// DetectMime detect file mime info from content
+func DetectMime(data []byte) *mimetype.MIME {
+	return mimetype.Detect(data)
 }
 
 // Extension get file extension

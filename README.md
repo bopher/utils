@@ -149,14 +149,14 @@ err := utils.CreateDirectory("a/b/c/d") // => Create all a, b, c and d directory
 
 ### DetectMime
 
-Detect file mime info. This function returns `nil` on error.
+Detect file mime info from content
 
 ```go
 // Signature:
-DetectMime(file string) *mimetype.MIME
+DetectMime(data []byte) *mimetype.MIME
 
 // Example:
-if mime := DetectMime(myFile); mime != nil {
+if mime := DetectMime(myFileData); mime != nil {
     // do something
 }
 ```
