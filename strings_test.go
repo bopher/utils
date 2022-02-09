@@ -46,6 +46,14 @@ func TestSlugify(t *testing.T) {
 	}
 }
 
+func TestSlugifyPersian(t *testing.T) {
+	res := utils.SlugifyPersian("خوش آمدید \n \r \t - to گچپژ")
+	if res != "خوش-آمدید-to-گچپژ" {
+		t.Log(res)
+		t.Fatal("failed!")
+	}
+}
+
 func TestConcatStr(t *testing.T) {
 	res := utils.ConcatStr(" ", "John", "", "Doe")
 	if res != "John Doe" {

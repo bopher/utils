@@ -215,6 +215,15 @@ import "github.com/bopher/utils"
 str := utils.Slugify("welcome to", "my site") // => "welcome-to-my-site"
 ```
 
+### SlugifyPersian
+
+Make slugify string for persian string. this function only keep `persian alphabet`, `a-z`, `A-Z` and `0-9` characters.
+
+```go
+import "github.com/bopher/utils"
+str := utils.SlugifyPersian("خوش آمدید \n \r \t - to گچپژ") // => "خوش-آمدید-to-گچپژ"
+```
+
 ### ConcatStr
 
 Join strings with separator.
