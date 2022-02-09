@@ -57,8 +57,8 @@ func Slugify(str ...string) string {
 
 // SlugifyPersian make slugify string for persian string
 func SlugifyPersian(str ...string) string {
-	rx := regexp.MustCompile("[^\u0600-\u06FF\uFB8A\u067E\u0686\u06AF a-zA-Z0-9]") // standard chars
-	return Slugify(rx.ReplaceAllString(strings.Join(str, ""), ""))
+	rx := regexp.MustCompile("[^\u0600-\u06FF\uFB8A\u067E\u0686\u06AF a-zA-Z0-9\\-]") // standard chars
+	return Slugify(rx.ReplaceAllString(strings.Join(str, "-"), ""))
 }
 
 // ConcatStr join strings with separator
