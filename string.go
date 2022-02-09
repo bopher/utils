@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"fmt"
 	"math/rand"
 	"regexp"
 	"strings"
@@ -13,6 +14,18 @@ import (
 func ExtractNumbers(str string) string {
 	rx := regexp.MustCompile("[0-9]+")
 	return strings.Join(rx.FindAllString(str, -1), "")
+}
+
+// ExtractAlphaNum extract alpha and numbers from string [a-zA-Z0-9]
+func ExtractAlphaNum(str string, includes ...string) string {
+	rx := regexp.MustCompile(fmt.Sprintf("[^a-zA-Z0-9%s]", strings.Join(includes, "")))
+	return rx.ReplaceAllString(str, "")
+}
+
+// ExtractAlphaNumPersian extract persian alpha, alpha and numbers from string [ا-یa-zA-Z0-9]
+func ExtractAlphaNumPersian(str string, includes ...string) string {
+	rx := regexp.MustCompile(fmt.Sprintf("[^\u0600-\u06FF\uFB8A\u067E\u0686\u06AFa-zA-Z0-9%s]", strings.Join(includes, "")))
+	return rx.ReplaceAllString(str, "")
 }
 
 // RandomStringFromCharset generate random string from character list

@@ -14,6 +14,22 @@ func TestExtractNumbers(t *testing.T) {
 	}
 }
 
+func TestExtractAlphaNum(t *testing.T) {
+	res := utils.ExtractAlphaNum("This is-text with 123 and _456", "-", "_")
+	if res != "Thisis-textwith123and_456" {
+		t.Log(res)
+		t.Fatal("failed!")
+	}
+}
+
+func TestExtractAlphaNumPersian(t *testing.T) {
+	res := utils.ExtractAlphaNumPersian("This is-textwith گچپژ and _456", "-", " ")
+	if res != "This is-textwith گچپژ and 456" {
+		t.Log(res)
+		t.Fatal("failed!")
+	}
+}
+
 func TestRandomStringFromCharset(t *testing.T) {
 	res, err := utils.RandomStringFromCharset(5, "1234567")
 	if err != nil {

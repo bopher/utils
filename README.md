@@ -187,6 +187,24 @@ import "github.com/bopher/utils"
 numbers := utils.ExtractNumbers("(+1) 234-56789") // => 123456789
 ```
 
+### ExtractAlphaNum
+
+Extract alpha and numbers from string `[a-zA-Z0-9]`. You can add extra character to add in extraction.
+
+```go
+import "github.com/bopher/utils"
+numbers := utils.ExtractAlphaNum("this is a: 123", ":") // => "thisisa:123"
+```
+
+### ExtractAlphaNumPersian
+
+Extract persian alpha, alpha and numbers from string `[ا-یa-zA-Z0-9]`. You can add extra character to add in extraction.
+
+```go
+import "github.com/bopher/utils"
+numbers := utils.ExtractAlphaNumPersian("My name is: مجتبی", " ") // => "My name is مجتبی"
+```
+
 ### RandomStringFromCharset
 
 Generate random string from character list.
