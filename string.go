@@ -5,6 +5,7 @@ import (
 	"math/rand"
 	"regexp"
 	"strings"
+	"time"
 
 	"golang.org/x/text/language"
 	"golang.org/x/text/message"
@@ -30,6 +31,7 @@ func ExtractAlphaNumPersian(str string, includes ...string) string {
 
 // RandomStringFromCharset generate random string from character list
 func RandomStringFromCharset(n uint, letters string) (res string, err error) {
+	rand.Seed(time.Now().UnixNano())
 	bytes := make([]byte, n)
 	_, err = rand.Read(bytes)
 	if err != nil {
