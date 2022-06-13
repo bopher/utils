@@ -36,7 +36,7 @@ Generate a tagged error.
 
 ```go
 // Signature:
-TaggedError(tags []string, format string, args ...interface{}) error
+TaggedError(tags []string, format string, args ...any) error
 
 // Example:
 TaggedError([]string{"MyLib","MyMethod"}, "failed on %s file!", "main.json")
@@ -268,6 +268,6 @@ Format number with comma separator.
 
 ```go
 import "github.com/bopher/utils"
-func FormatNumber(format string, v ...interface{}) string {
+func FormatNumber(format string, v ...any) string {
 str := utils.FormatNumber("$ %d [total] $ %d [remain]", 10000, 2500) // => "$ 10,000 [total] $ 2,500 [remain]"
 ```

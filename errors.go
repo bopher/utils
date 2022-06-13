@@ -6,7 +6,7 @@ import (
 )
 
 // TaggedError generate a tagged error
-func TaggedError(tags []string, format string, args ...interface{}) error {
+func TaggedError(tags []string, format string, args ...any) error {
 	_tags := ""
 	for _, t := range tags {
 		_tags = fmt.Sprintf("%s[%s] ", _tags, t)

@@ -75,7 +75,7 @@ func ConcatStr(sep string, str ...string) string {
 }
 
 // FormatNumber format number with comma separator
-func FormatNumber(format string, v ...interface{}) string {
+func FormatNumber(format string, v ...any) string {
 	p := message.NewPrinter(language.English)
 	return p.Sprintf(format, v...)
 }
