@@ -73,32 +73,13 @@ Generate panic from error if error not nil.
 PanicOnError(err error)
 ```
 
-### Handle Functions Return Value
+### VarOrPanic
 
-This set of functions help you to handle output of function that have a return type with error value. this functions generate panic on error or return value. You can use this functions instead of if else block for checking error.
+Get function result (T, error), panic error if result has error and return T otherwise.
 
 ```go
 // Signature:
-UIntOrPanic(res uint, err error) uint
-UInt8OrPanic(res uint8, err error) uint8
-UInt16OrPanic(res uint16, err error) uint16
-UInt32OrPanic(res uint32, err error) uint32
-UInt64OrPanic(res uint64, err error) uint64
-IntOrPanic(res int, err error) int
-Int8OrPanic(res int8, err error) int8
-Int16OrPanic(res int16, err error) int16
-Int32OrPanic(res int32, err error) int32
-Int64OrPanic(res int64, err error) int64
-Float32OrPanic(res float32, err error) float32
-Float64OrPanic(res float64, err error) float64
-StringOrPanic(res string, err error) string
-BoolOrPanic(res bool, err error) bool
-InterfaceOrPanic(res interface{}, err error) interface{}
-
-// Example:
-import "github.com/bopher/utils"
-func TestIt(a int, b int) (int, error) { ... }
-res = utils.IntOrPanic(TestIt(1, 3))
+VarOrPanic[T any](res T, err error) T
 ```
 
 ## File
