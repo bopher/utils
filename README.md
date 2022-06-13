@@ -2,6 +2,32 @@
 
 A Set of useful functions for working with files, errors and strings.
 
+## Functions
+
+### If
+
+Generate quick if result.
+
+```go
+// Signature:
+func If[T any](cond bool, yes T, no T) T
+
+// Example:
+res := If[string](name == "john", "it's john", "anonymous")
+```
+
+### Contains
+
+Check if slice contains item.
+
+```go
+// Signature:
+func Contains[T comparable](items []T, item T) bool
+
+// Example:
+res := Contains[string](items, "john")
+```
+
 ## Error
 
 ### TaggedError
