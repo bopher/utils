@@ -52,8 +52,8 @@ func RandomString(n uint) (string, error) {
 
 // Slugify make slugify string
 func Slugify(str ...string) string {
-	r := regexp.MustCompile("\\s+")
-	r2 := regexp.MustCompile("\\-+")
+	r := regexp.MustCompile(`\s+`)
+	r2 := regexp.MustCompile(`\-+`)
 	return string(r2.ReplaceAllString(string(r.ReplaceAllString(strings.Join(str, "-"), "-")), "-"))
 }
 

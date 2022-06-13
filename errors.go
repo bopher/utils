@@ -21,10 +21,7 @@ func IsErrorOf(tag string, err error) bool {
 
 // HasError return true if error not nil, otherwise return false
 func HasError(err error) bool {
-	if err == nil {
-		return false
-	}
-	return true
+	return err != nil
 }
 
 // PanicOnError generate panic if error is not null
